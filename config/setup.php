@@ -1,43 +1,31 @@
 <?php
+	require_once('F:/Prog/PhpServer/wamp64/www/camagru/urls/Urls.class.php');
 
-	require_once('database/database.php');
+	require_once('database.php');
+	require_once(Urls::getPath('config', 'users_table.php'));
+	require_once(Urls::getPath('config', 'images_table.php'));
+	require_once(Urls::getPath('config', 'comments_table.php'));
+	require_once(Urls::getPath('config', 'likes_table.php'));
 
-	$database = new Database($DB_DSN);
-	$database->getDB()->query('CREATE TABLE IF NOT EXISTS Users (
-		id				INTEGER			PRIMARY KEY AUTOINCREMENT,
-		name			VARCHAR(15),
-		passwd			VARCHAR(250),
-		admin			INTEGER,
-		created			DATETIME
-		);');
+	if (createUsersTable($DB_DSN)) {
+		if (createAdmin($DB_DSN)) {
+			if (createImagesTable($DB_DSN)) {
+				if (createCommentsTable($DB_DSN)) {
+					if (createLikesTable($DB_DSN)) {
+						echo 'Database is now ready.'.PHP_EOL;
+						return ;
+					}
+					else
+						echo 'Failed to create Likes table.'.PHP_EOL;
+				} else
+					echo 'Failed to create Comments table.'.PHP_EOL;
+			} else
+				echo 'Failed to create Image table.'.PHP_EOL;
+		} else
+			echo 'Failed to create admin.'.PHP_EOL;
+	} else
+		echo 'Failed to create Users table.'.PHP_EOL;
+	unlink(Urls::getPath('database', 'database.sqlite3'));
 
-	echo "Table created.".PHP_EOL;
-
-	echo "Enter admin username : ";
-	$fd = fopen("php://stdin", "r");
-	$line = fgets($fd);
-	$admin_name = trim($line);
-	fclose($fd);
-
-	echo "Enter admin password : ";
-	$fd = fopen("php://stdin", "r");
-	$line = fgets($fd);
-	$admin_pass = trim($line);
-	fclose($fd);
-
-	try {
-		$stmt = $database->getDB()->prepare('INSERT INTO Users (name, passwd, admin, created) VALUES (:name, :passwd, :admin, :created)');
-		$result = $stmt->execute(array(
-			'name'		=>	$admin_name,
-			'passwd'	=>	hash('whirlpool', $admin_pass),
-			'admin'		=>	1,
-			'created'	=>	date('Y-m-d H:i:s')
-		));		
-	} catch (Exception $e)
-	{
-		echo 'Error : '.$e->getMessage().PHP_EOL;
-		die();
-	}
-	echo "Database set.".PHP_EOL;
 
 ?>

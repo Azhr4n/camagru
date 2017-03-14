@@ -1,0 +1,63 @@
+
+.formDiv {
+	width: 350px;
+	margin-left: 25px;
+
+	background-color: #75B9FF;
+
+	border: outset #75B9FF 1px;
+
+	/*border: solid red;*/
+}
+
+.formDiv a {
+	font-size: 0.75em;
+	padding-left: 15px;
+}
+
+.inputField {
+	margin-top: 15px;
+	padding-left: 10px;
+
+	text-align: left;
+	/*border: solid orange;*/
+}
+
+.inputField label {
+	width: 30%;
+
+	display: inline-block;
+
+	color: white;
+	/*border: solid yellow;*/
+}
+
+.inputField input {
+	width: 65%;
+
+	/*border: solid green;*/
+}
+
+.centeringField {
+	text-align: center;
+}
+
+.buttonForm {
+	margin-top: 25px;
+	margin-bottom: 10px;
+	width: 90%;
+
+	font-size: 1em;
+	color: white;
+	background-color: #75B9FF;
+	border: outset #75B9FF 1px;
+}
+
+.buttonForm:hover {
+	background-color: #85C9FF;
+}
+
+.separator {
+	margin-top: 25px;
+	border-top: solid black 1px;
+}

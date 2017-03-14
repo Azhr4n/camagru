@@ -1,84 +1,77 @@
 <?php
 
-class Database
+require_once('F:/Prog/PhpServer/wamp64/www/camagru/urls/Urls.class.php');
+
+abstract class Database
 {
-	private $_db;
-	private $_hash_machine;
+	protected $_db;
 
 	function __construct($db_path) {
-		$this->_hash_machine = 'whirlpool';
-		$this->_db = $this->connect($db_path);
+		$this->_db = $db_path;
 	}
 
 	function __destruct() {}
 
-	private function connect($path) {
+	protected function connect() {
 		try {
-			$db = new PDO($path);
-			$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-			$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$connection = new PDO($this->_db);
+			$connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+			$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		} catch (Exception $e) {
-			return (0);
+			return (null);
 		}
-		return ($db);
+		return ($connection);
 	}
 
-	private function fetchAll($type) {
+	protected function disconnect(PDO $connection) {
+		$connection = null;
+	}
+
+	function request($request, array $array=null, $fetchAll=false, $fetch=false) {
 		try {
-			$stmt = $this->_db->prepare('SELECT * FROM '.$type);
-			$stmt->execute();
-			$ret = $stmt->fetchAll();
-		} catch (Exception $e) {
-			return (-1);
+			$connection = $this->connect();
+			if ($connection == null)
+				return (FALSE);
+			$stmt = $connection->prepare($request);
+			$stmt->execute($array);
+			if ($fetchAll)
+				$ret = $stmt->fetchAll();
+			else if ($fetch)
+				$ret = $stmt->fetch();
+			else
+				$ret = TRUE;
 		}
+		catch (Exception $e) {
+			echo $e->getMessage();
+			$ret = FALSE;
+		}
+		$this->disconnect($connection);
 		return ($ret);
 	}
 
-	function getHashMachine() {
-		return ($this->_hash_machine);
-	}
-
-	function getDB() {
-		return ($this->_db);
-	}
-
-	function userExist($username) {
-		if (($ret = $this->fetchAll('Users')) == -1)
-			return (-1);
-		foreach ($ret as $user) {
-			if ($user['name'] == $username)
-				return (1);
+	function createTable($name, array $rows) {
+		$req = 'CREATE TABLE IF NOT EXISTS '.$name.' (';
+		$size = count($rows);
+		for ($i = 0; $i < $size; $i++) {
+			if ($i > 0)
+				$req = $req.', '.$rows[$i];
+			else
+				$req = $req.$rows[$i];
 		}
-		return (0);
+		$req = $req.');';
+		return $this->request($req);
 	}
 
-	//Forbidden functions !
-
-	function printUsers() {
-		$ret = $this->fetchAll('Users');
-		foreach ($ret as $user) {
-			print_r($user);
-		}
+	function deleteTable($name) {
+		$req = 'DROP TABLE '.$name;
+		return $this->request($req);
 	}
 
-	//End of forbidden magic !
+	abstract protected function createObject(array $data);
+	abstract protected function get(array $data);
+	abstract protected function set($object, array $data);
+	abstract protected function del($object);
 
-	function createAccount($username, $password) {
-		if ($this->userExist($username) == 1)
-			return (0);
-		$hashed_password = hash($this->_hash_machine, $password);
-		try {
-			$stmt = $this->_db->prepare('INSERT INTO Users (name, passwd, created) VALUES (:name, :passwd, :created)');
-			$result = $stmt->execute(array(
-				'name'		=>	$username,
-				'passwd'	=>	$hashed_password,
-				'created'	=>	date('Y-m-d H:i:s')
-			));			
-		} catch (Exception $e) {
-			return (-1);
-		}
-		return (1);
-	}
 }
 
 ?>

@@ -1,23 +1,15 @@
-<?php
-	require_once('user/user.php');
-	require_once('database/database.php');
-?>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<title>Ill find it.</title>
-	<link rel="stylesheet" href="static/css/style.css">
-	<link rel="stylesheet" href="static/css/header.css">
-</head>
-<body>
-
 <header>
-	
-	<div id=nav>
+	<nav class='navbar'>
 		<ul>
-			<li><a href=create_account.php >Register</a></li>
-			<li><a href=index.php >Home</a></li>
+			<li><a href='<?php echo Urls::getUrl('index.php')?>'>Home</a></li
+<?php if ($_SESSION['User']->isLogged()) { ?>
+			><li><a href='<?php echo Urls::getUrl('lab.php')?>'>Lab</a></li
+			><li><a href='<?php echo Urls::getUrl('account.php')?>'>Account</a></li
+			><li><a href='<?php echo Urls::getUrl('logout.php')?>'>Log out</a></li>
+<?php } else { ?>
+			><li><a href='<?php echo Urls::getUrl('register.php')?>'>Register</a></li
+			><li><a href='<?php echo Urls::getUrl('login.php')?>'>Log In</a></li>
+<?php } ?>
 		</ul>
-	</div>
-
+	</nav>
 </header>

@@ -1,0 +1,35 @@
+
+.wrapper {
+	text-align: center;
+}
+
+.imageSection {
+	padding: 15px;
+	width: 35%;
+	min-width: 350px;
+	display: inline-block;
+	background-color: #85C9FF;
+
+	border: outset #85C9FF 1px;
+	/*border: solid orange;*/
+}
+
+.imageHandler {
+	margin: 0;
+	padding: 0;
+
+	width: 150px;
+	height: 150px;
+
+	display: inline-block;
+
+	background-color: #FFF;
+	border: outset #FFF 1px;
+	/*border: solid yellow;*/
+}
+
+.imageHandler img {
+	width: 100%;
+	height: 100%;
+	/*border: solid red;*/
+}
