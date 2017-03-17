@@ -1,7 +1,5 @@
 <?php
 
-require_once('F:/Prog/PhpServer/wamp64/www/camagru/urls/Urls.class.php');
-
 class Comment {
 	
 	private $_id;

@@ -92,10 +92,9 @@ class User
 	}
 
 	function sendResetMail($token) {
-		return TRUE;
-		/*
-		*** Send mail reset.
-		*/
+		if (mail($this->_email, 'Reset password', Urls::getUrl('login.php').'?reset_token='.$token))
+			return TRUE;
+		return FALSE;
 	}
 
 	function __toString() {

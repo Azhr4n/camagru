@@ -1,5 +1,5 @@
 <?php
-require_once('F:/Prog/PhpServer/wamp64/www/camagru/urls/Urls.class.php');
+require_once(dirname(dirname(__FILE__)).'/urls/Urls.class.php');
 require_once(Urls::getPath('config', 'database.php'));
 require_once(Urls::getPath('security', 'CSRFToken.class.php'));
 require_once(Urls::getPath('user', 'CurrentUser.class.php'));

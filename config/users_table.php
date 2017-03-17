@@ -1,7 +1,5 @@
 <?php
-
-require_once('F:/Prog/PhpServer/wamp64/www/camagru/urls/Urls.class.php');
-
+require_once(dirname(dirname(__FILE__)).'/urls/Urls.class.php');
 require_once(Urls::getPath('database', 'UsersDB.class.php'));
 
 function createUsersTable($db_path) {
@@ -37,6 +35,7 @@ function createAdmin($db_path) {
 	system('stty echo');//reset echo
 	$admin_pass = trim($line);
 	fclose($fd);
+	echo PHP_EOL;
 
 	echo "Enter admin email : ";
 	$fd = fopen("php://stdin", "r");

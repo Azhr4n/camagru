@@ -6,7 +6,7 @@
 	function retrieveToken(token_name, func, url, data) {
 		var token_req = new XMLHttpRequest();
 
-			token_req.open('post', 'http://localhost/camagru/call/call_token.php', true);
+			token_req.open('post', 'http://localhost:8080/camagru/call/call_token.php', true);
 			token_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			token_req.onreadystatechange = function () {
 				if (this.readyState == 4 && this.status == 200) {
@@ -58,7 +58,7 @@
 							];
 
 							this.value = '';
-							retrieveToken('csrf_comment', submit, 'http://localhost/camagru/call/call_comment.php', data);
+							retrieveToken('csrf_comment', submit, 'http://localhost:8080/camagru/call/call_comment.php', data);
 						}
 					}
 					parent.appendChild(input);
@@ -82,7 +82,7 @@
 					'target=' + ucname.innerHTML + ':' + ucomment.innerHTML,
 				];
 
-				retrieveToken('csrf_comment', submit, 'http://localhost/camagru/call/call_comment.php', data);
+				retrieveToken('csrf_comment', submit, 'http://localhost:8080/camagru/call/call_comment.php', data);
 				return false;
 			};
 		}
@@ -106,7 +106,7 @@
 					else
 						data.push('target=' + ucname.innerHTML + ':' + ucomment.innerHTML);
 					// console.log(data);
-					retrieveToken('csrf_like', submit, 'http://localhost/camagru/call/call_like.php', data);
+					retrieveToken('csrf_like', submit, 'http://localhost:8080/camagru/call/call_like.php', data);
 				return false;
 			};
 		}
@@ -126,7 +126,7 @@
 				];
 
 				icinput.value = '';
-				retrieveToken('csrf_comment', submit, 'http://localhost/camagru/call/call_comment.php', data);
+				retrieveToken('csrf_comment', submit, 'http://localhost:8080/camagru/call/call_comment.php', data);
 			}
 		});
 	}
@@ -136,7 +136,7 @@
 			image = document.querySelector('#image'),
 			comments = document.querySelector('.comments');
 
-		req.open('get', 'http://localhost/camagru/call/call_comment.php?image_name=' + image.alt, true);
+		req.open('get', 'http://localhost:8080/camagru/call/call_comment.php?image_name=' + image.alt, true);
 		req.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
 				if (this.responseText.substring(0, 6) == 'Error:')

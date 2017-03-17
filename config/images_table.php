@@ -1,6 +1,5 @@
 <?php
-require_once('F:/Prog/PhpServer/wamp64/www/camagru/urls/Urls.class.php');
-
+require_once(dirname(dirname(__FILE__)).'/urls/Urls.class.php');
 require_once(Urls::getPath('database', 'ImagesDB.class.php'));
 
 function createImagesTable($db_path) {

@@ -12,7 +12,7 @@ var ImageHandler = (function () {
 	function retrieveToken(func, data) {
 		var token_req = new XMLHttpRequest();
 
-			token_req.open('post', 'http://localhost/camagru/call/call_token.php', true);
+			token_req.open('post', 'http://localhost:8080/camagru/call/call_token.php', true);
 			token_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			token_req.onreadystatechange = function () {
 				if (this.readyState == 4 && this.status == 200) {
@@ -26,12 +26,12 @@ var ImageHandler = (function () {
 	function delRequest(array) {
 		var req = new XMLHttpRequest();
 
-		req.open('POST', 'http://localhost/camagru/call/call_image2', true);
+		req.open('POST', 'http://localhost:8080/camagru/call/call_image2.php', true);
 		req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		req.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
 				getImages();
-				console.log(this.responseText);
+				// console.log(this.responseText);
 			}
 		}
 		req.send('images=delete&id=' + array.join('.') + '&csrf_token=' + csrf.value);
@@ -42,7 +42,7 @@ var ImageHandler = (function () {
 			img, label, ret, check, del_button,
 			flag = false;
 
-			req.open('POST', 'http://localhost/camagru/call/call_image2', true);
+			req.open('POST', 'http://localhost:8080/camagru/call/call_image2.php', true);
 			req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			req.onreadystatechange = function () {
 				if (this.readyState == 4 && this.status == 200) {

@@ -1,7 +1,12 @@
 <?php
-	require_once('F:/Prog/PhpServer/wamp64/www/camagru/urls/Urls.class.php');
 
-	require_once('database.php');
+	ini_set('display_errors', 1);
+	ini_set('display_startup_errors', 1);
+	error_reporting(E_ALL);
+
+	require_once(dirname(dirname(__FILE__)).'/urls/Urls.class.php');
+
+	require_once(Urls::getPath('config', 'database.php'));
 	require_once(Urls::getPath('config', 'users_table.php'));
 	require_once(Urls::getPath('config', 'images_table.php'));
 	require_once(Urls::getPath('config', 'comments_table.php'));
@@ -25,7 +30,7 @@
 			echo 'Failed to create admin.'.PHP_EOL;
 	} else
 		echo 'Failed to create Users table.'.PHP_EOL;
-	unlink(Urls::getPath('database', 'database.sqlite3'));
-
-
+	$path = Urls::getPath('database', 'database.sqlite3');
+	if (file_exists($path))
+		unlink($path);
 ?>

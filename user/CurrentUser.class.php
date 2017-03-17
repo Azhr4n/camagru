@@ -1,6 +1,5 @@
 <?php
-
-require_once('F:/Prog/PhpServer/wamp64/www/camagru/urls/Urls.class.php');
+require_once(dirname(dirname(__FILE__)).'/urls/Urls.class.php');
 
 require_once(Urls::getPath('user', 'User.class.php'));
 require_once(Urls::getPath('database', 'UsersDB.class.php'));
@@ -20,8 +19,11 @@ class CurrentUser extends User
 
 	function __destruct() {}
 
-	private function createToken($length=128) {
-		return bin2hex(openssl_random_pseudo_bytes($length / 2));
+	function createToken($length=128) {
+	    $size = mcrypt_get_iv_size(MCRYPT_CAST_256, MCRYPT_MODE_CFB);
+     	$iv = bin2hex(mcrypt_create_iv($size, MCRYPT_DEV_RANDOM));
+     	return $iv;
+		// return bin2hex(openssl_random_pseudo_bytes($length / 2));
 	}
 
 	function CSRFToken($name) {
@@ -72,10 +74,10 @@ class CurrentUser extends User
 		$database = new UsersDB($this->_db_path);
 		$ret = $database->createAccount($user);
 		if ($ret) {
-			if (mail('firefrai@gmail.com', 'test', 'Hey this is a test !'))
+			if (mail($user->getEmail(), 'WELCOME BRAH !', 'Your account has been successfully created.'))
 				return 'An email has been sent.';
 			else {
-				// $database->delUser($user);
+				$database->delUser($user);
 				return 'Error sending email.';
 			}
 		}
