@@ -4,7 +4,6 @@
 
 	require_once(Urls::getPath('config', 'database.php'));
 	require_once(Urls::getPath('database', 'ImagesDB.class.php'));
-
 ?>
 <!doctype html>
 <html lang="fr">

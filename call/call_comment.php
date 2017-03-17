@@ -20,11 +20,13 @@ function echoCommentBlock($username, $value, $likes_str) {
 	echo '			<div class=ucname>'.$username.'</div>';
 	echo '			<div class=ucomment>'.$value.'</div>';
 	echo '		</div>';
-	echo '		<div>'.$likes_str.'</div>';
-	echo '		<a class="likeLink" href="#" role="button">Like</a>';
-	echo '		<a class="replyLink" href="#" role="button">Reply</a>';
+	echo '		<div class="Links">';
+	echo '				<a class="likeLink" href="#" role="button">Like</a>';
+	echo '				<a class="replyLink" href="#" role="button">Reply</a>';
 	if ($_SESSION['User']->getName() == $username)
-		echo '		<a class="deleteLink" href="#" role="button">Delete</a>';
+		echo '					<a class="deleteLink" href="#" role="button">Delete</a>';
+	echo '		</div>';
+	echo '		<div class="Like">'.$likes_str.'</div>';
 	echo '	</div>';
 }
 
@@ -70,11 +72,14 @@ function createCommentSection($database, $ldatabase, $comments) {
 	}
 }
 
-function delComments($database, $comments) {
+function delComments($database, $ldb, $comments) {
 	foreach ($comments as $comment) {
 		$replies = $database->get(['image_name'=>$comment->getImage(), 'target'=>$comment->getID()]);
 		if ($replies)
-			delComments($database, $replies);
+			delComments($database, $ldb, $replies);
+		$likes = $ldb->get(['target'=>$comment->getID()]);
+		if ($likes)
+			$ldb->del($likes[0]);
 		$database->del($comment);
 	}
 }
@@ -109,8 +114,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				$tab = explode(':', $target);
 				if (count($tab) == 2) {
 					$comments = $database->get(['image_name'=>$image_name, 'username'=>$tab[0], 'value'=>$tab[1]]);
-					if ($comments)
-						delComments($database, $comments);
+					if ($comments) {
+						$ldb = new LikesDB($DB_DSN);
+						delComments($database, $ldb, $comments);
+					}
 				}
 			}
 		}

@@ -19,13 +19,19 @@ function setSize(object, width, height) {
 		cbutton = document.querySelector('#camera_button'),
 		image = document.querySelector('#image'),
 		save = document.querySelector('#save'),
-		imageRect = image.getBoundingClientRect(),
-		width = 640,
-		height = 480;
+		imageRect = image.getBoundingClientRect();
+		// width = 640,
+		// height = 480;
 
 	buffer.style.display = 'none';
-	canvas.style.left = imageRect.left + 'px';
-	setSize([buffer, canvas, image, video], width, height);
+	canvas.style.left = (imageRect.left - 5) + 'px';
+
+	window.onresize = function () {
+		imageRect = image.getBoundingClientRect();
+		canvas.style.left = (imageRect.left - 5) + 'px';
+	}
+
+	// setSize([buffer, canvas, image, video], width, height);
 
 	navigator.getMedia = (navigator.getUserMedia ||
 		navigator.webkitGetUserMedia ||
@@ -42,6 +48,8 @@ function setSize(object, width, height) {
 			} else {
 				var vendorURL = window.URL || window.webkitURL;
 				video.src = vendorURL.createObjectURL(stream);
+				video.style.width = '100%';
+				video.style.height = '100%';
 			}
 			video.play();
 		},
@@ -66,6 +74,8 @@ function setSize(object, width, height) {
 			var reader = new FileReader();
 			reader.onload = function () {
 				image.setAttribute('src',  this.result);
+				image.style.width = '100%';
+				image.style.height = '100%';
 				if (save.disabled)
 					save.disabled = false;
 			};

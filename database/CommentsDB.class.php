@@ -29,6 +29,8 @@ class CommentsDB extends Database
 				else
 					$req = 'SELECT * FROM Comments WHERE image_name=\''.$data['image_name'].'\'';
 			}
+			else
+				$req = 'SELECT * FROM Comments';
 		}
 		else
 			return FALSE;

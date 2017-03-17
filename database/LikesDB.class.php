@@ -13,7 +13,7 @@ class LikesDB extends Database
 	}
 
 	protected function createObject(array $data) {
-		return (new Like($data['username'], $data['target']));
+		return (new Like($data['username'], $data['target'], $data['created']));
 	}
 
 	function get(array $data) {
@@ -26,7 +26,7 @@ class LikesDB extends Database
 				$req = 'SELECT * FROM Likes WHERE target=\''.$data['target'].'\'';
 		}
 		else
-			return FALSE;
+			$req = 'SELECT * FROM Likes';
 		$objects = $this->request($req, null, true);
 		if ($objects) {
 			$ret = [];

@@ -3,6 +3,8 @@ body {
 	margin: 0;
 	padding: 0;
 
+	min-width: 625px;
+
 	background-color: #E0E0FF;
 }
 
@@ -51,4 +53,22 @@ body {
 body .message {
 	text-align: center;
 	font-size: 1.5em;
+}
+
+@media (max-width: 1915px) {
+	body, body button {
+		font-size: 0.9em;
+	}
+}
+
+@media (max-width: 1580px) {
+	body {
+		font-size: 0.8em;
+	}
+}
+
+@media (max-width: 1000px) {
+	body {
+		font-size: 0.7em;
+	}
 }

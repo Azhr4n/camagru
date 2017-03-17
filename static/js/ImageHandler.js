@@ -5,7 +5,9 @@ var ImageHandler = (function () {
 			image = null,
 			filter = null,
 			saved_images = null,
-			csrf = null;
+			csrf = null,
+			attrib = false,
+			del_button = null;
 
 	function retrieveToken(func, data) {
 		var token_req = new XMLHttpRequest();
@@ -29,7 +31,7 @@ var ImageHandler = (function () {
 		req.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
 				getImages();
-				// console.log(this.responseText);
+				console.log(this.responseText);
 			}
 		}
 		req.send('images=delete&id=' + array.join('.') + '&csrf_token=' + csrf.value);
@@ -54,36 +56,31 @@ var ImageHandler = (function () {
 								check = document.createElement('input');
 								check.type = 'checkbox';
 
+								check.onchange = function (event) {
+									if (this.checked)
+										this.nextElementSibling.style.border = 'inset #85C9FF 2px';
+									else
+										this.nextElementSibling.style.border = '';
+								};
+
 								img = document.createElement('img');
 								img.src = 'data:image/png;base64,' + ret[id].substr(7);
-								img.width = 320;
-								img.height = 240;
+								// img.width = 320;
+								// img.height = 240;
 								saved_images.appendChild(img);
 
 								label.appendChild(check);
 								label.appendChild(img);
-								label.className = 'checkbox_label';
+								label.className = 'CheckboxLabel';
 
 								saved_images.appendChild(label);
 							}
-							if (flag) {
-								del_button = document.createElement('button');
-								del_button.innerHTML = 'Delete selected images';
-								del_button.addEventListener('click', function () {
-									var labels = document.querySelectorAll('.checkbox_label'),
-										i = 0,
-										array = [];
-
-									for ( ; i < labels.length; i++) {
-										if (labels[i].children[0].checked) {
-											array.push(i);
-										}
-									}
-									retrieveToken(delRequest, array);
-									// delRequest(array);
-								});
-								saved_images.appendChild(del_button);
-							}
+							if (del_button) {
+								if (flag)
+									del_button.disable = false;
+								else
+									del_button.disable = true;
+							} 
 						}
 					} else
 						cleanImages();
@@ -105,6 +102,22 @@ var ImageHandler = (function () {
 		filter = document.querySelector('#camera_filter');
 		saved_images = document.querySelector('#saved_images');
 		csrf = document.querySelector('input[name="csrf_token"]');
+
+		del_button = document.querySelector('.DelButton');
+		del_button.addEventListener('click', function () {
+			var labels = document.querySelectorAll('.CheckboxLabel'),
+				i = 0,
+				array = [];
+
+			for ( ; i < labels.length; i++) {
+				if (labels[i].children[0].checked) {
+					array.push(i);
+				}
+			}
+			retrieveToken(delRequest, array);
+			// delRequest(array);
+		});
+
 		getImages();
 	});
 

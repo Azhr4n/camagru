@@ -25,6 +25,8 @@
 
 		<p class='message'><?php if (isset($_SESSION['Message'])) echo $_SESSION['Message']; ?></p>
 
+		<div class='ImageWrapper'>
+			<div class='SubImageWrapper'>
 		<?php 
 			if (isset($_GET['image']) && !empty($_GET['image'])) {
 				$image_db = new ImagesDB($DB_DSN);
@@ -44,6 +46,8 @@
 				}
 			}
 		?>
+			</div>
+		</div>
 
 		<script type="text/javascript" src='<?php echo Urls::getUrl('static/js/comment.js'); ?>'></script>
 

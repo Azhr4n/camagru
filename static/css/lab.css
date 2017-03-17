@@ -1,0 +1,172 @@
+
+.Wrapper {
+	min-width: 500px;
+	white-space: nowrap;
+	text-align: center;
+}
+
+.LabWrapper {
+	width: 70%;
+	min-width: 500px;
+	max-width: 1335px;
+	height: 725px;
+
+	display: inline-block;
+	vertical-align: top;
+	background-color: #75B9FF;
+
+	border: outset #75B9FF 1px;
+}
+
+.Camera, .Image {
+	display: inline-block;
+}
+
+.VideoPlace, .ImagePlace, .Canvas {
+	margin: 10px;
+	width: 640px;
+	height: 480px;
+}
+
+.VideoPlace video, #image {
+	width: 100%;
+	height: 100%;
+}
+
+.VideoPlace, .ImagePlace {
+	background-color: white;
+	border: inset #75B9FF 1px;
+}
+
+.ButtonHolder {
+	width: 100%;
+}
+
+.ButtonHolder button:not(.DelButton) {
+	width: 30%;
+}
+
+.DelButton {
+	width: 60%;
+}
+
+#import_button {
+	display: none;
+}
+
+.FilterHolder {
+	margin: 10px;
+	margin-top: 25px;
+	width: 79%;
+
+	display: inline-block;
+	white-space: nowrap;
+	overflow-x: scroll;
+
+	border: inset #75B9FF 1px;
+}
+
+.ImageFilter {
+	margin: 5px;
+	width: 160px;
+	height: 120px;
+
+	display: inline-block;
+
+	background-color: white;
+	border: inset #75B9FF 1px;
+}
+
+.RadioFilter {
+	display: none;
+}
+
+.SavedWrapper {
+	width: 15%;
+	min-width: 100px;
+	max-width: 290px;
+	height: 725px;
+	
+	white-space: normal;
+	display: inline-block;
+
+	background-color: #75B9FF;
+	border: outset #75B9FF 1px;
+}
+
+.SavedImage {
+	margin-top: 10px;
+	width: 95%;
+	height: 90%;
+	overflow-y: scroll;
+
+	display: inline-block;
+
+	background-color: #75B9FF;
+	border: inset #75B9FF 1px;
+}
+
+.CheckboxLabel img {
+	width: 240px;
+	height: 180px;
+}
+
+.CheckboxLabel input {
+	display: none;
+}
+
+@media (max-width: 1915px) {
+	.LabWrapper, .SavedWrapper {
+		height: 610px;
+	}
+
+	.VideoPlace, .ImagePlace, .Canvas {
+		margin: 10px;
+		width: 480px;
+		height: 360px;
+	}
+
+	.CheckboxLabel img {
+		width: 180px;
+		height: 135px;
+	}
+}
+
+@media (max-width: 1580px) {
+	.LabWrapper, .SavedWrapper {
+		height: 500px;
+	}
+
+	.VideoPlace, .ImagePlace, .Canvas {
+		margin: 10px;
+		width: 320px;
+		height: 240px;
+	}
+
+	.CheckboxLabel img {
+		width: 120px;
+		height: 90px;
+	}
+}
+
+@media (max-width: 1000px) {
+	.LabWrapper, .SavedWrapper {
+		height: 375px;
+	}
+
+	.VideoPlace, .ImagePlace, .Canvas {
+		margin: 10px;
+		width: 160px;
+		height: 120px;
+	}
+
+	.CheckboxLabel img {
+		width: 65px;
+		height: 50px;
+	}
+
+	.ImageFilter {
+		width: 150px;
+		height: 100px;
+	}
+}

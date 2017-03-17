@@ -40,7 +40,7 @@
 
 		for (let i = 0 ; i < replies.length; i++) {
 			replies[i].onclick = function () {
-				let parent = this.parentNode,
+				let parent = this.parentNode.parentNode,
 					input = document.createElement('input'),
 					ucname = parent.firstElementChild.querySelector('.ucname'),
 					ucomment = parent.firstElementChild.querySelector('.ucomment');
@@ -73,7 +73,7 @@
 
 		for (let i = 0 ; i < deletes.length; i++) {
 			deletes[i].onclick = function () {
-				let parent = this.parentNode,
+				let parent = this.parentNode.parentNode,
 				ucname = parent.firstElementChild.querySelector('.ucname'),
 				ucomment = parent.firstElementChild.querySelector('.ucomment'),
 				data = [
@@ -93,14 +93,15 @@
 
 		for (let i = 0 ; i < likes.length; i++) {
 			likes[i].onclick = function () {
-				let parent = this.parentNode,
+				let parent = this.parentNode.parentNode,
 					ucname = parent.firstElementChild.querySelector('.ucname'),
 					ucomment = parent.firstElementChild.querySelector('.ucomment'),
 					data = [
 						'like=ok',
 						'image_name=' + image.alt,
 					];
-					if (parent.parentNode.className != 'bcomment')
+
+					if (parent.className == 'comments')
 						data.push('target=' + image.alt);
 					else
 						data.push('target=' + ucname.innerHTML + ':' + ucomment.innerHTML);
@@ -156,7 +157,8 @@
 		req.send();
 	};
 	
-	if (image)
+	document.addEventListener("DOMContentLoaded", function () {
 		showComments();
+	});
 
 }) ();
